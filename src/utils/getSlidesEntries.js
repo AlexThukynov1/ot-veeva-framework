@@ -1,18 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
-export default function getSlidesEntries() {
-    const projectRoot = process.cwd();
-    const slideDir = path.resolve(projectRoot, 'src', 'slides');
-    const slideEntries = {};
+export default function getSlideEntries() {
 
-    const files = fs.readdirSync(slideDir);
-    const slideFolders = files.filter(
-        file => fs.statSync(path.join(slideDir, file)).isDirectory() && file.startsWith('slide-') );
+  const slidesDir = path.resolve(__dirname, '..', 'slides');
+  const slideEntries = {};
 
-    slideFolders.forEach(folder => {
-        slideEntries[folder] = path.resolve(slideDir, folder, 'index.html');
-    })
+  const files = fs.readdirSync(slidesDir);
+  const slideFolders = files.filter(file => 
+    fs.statSync(path.join(slidesDir, file)).isDirectory() && file.startsWith('slide-')
+  );
 
-    return slideEntries
+  slideFolders.forEach(folder => {
+    slideEntries[folder] = path.join('src', 'slides', folder, 'index.html');
+  });
+
+  return slideEntries;
 }

@@ -1,18 +1,27 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import getSlidesEntries from './src/utils/getSlidesEntries';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import getSlideEntries from './src/utils/getSlidesEntries'
+import getCopyTargets from './src/utils/getCopyTargets'
 
-// https://vite.dev/config/
+
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+        viteStaticCopy({
+      targets: getCopyTargets(),
+      hook: 'writeBundle', // Запускаємо копіювання після збірки
+    }),
+  ],
   build: {
     outDir: 'dist',
     rollupOptions: {
-      input: getSlidesEntries(),
+      input: getSlideEntries(),
       output: {
-        entryFileNames: '[name]/index.js',
-        assetFileNames: '[name]/[name].[ext]'
-      }
-    }
-  }
-})
+        entryFileNames: 'src/slides/[name]/index.js',
+        assetFileNames: 'src/slides/[name]/[name].[ext]',
+      },
+    },
+  },
+});
