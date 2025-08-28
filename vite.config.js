@@ -9,7 +9,7 @@ import getCopyTargets from './src/utils/getCopyTargets'
 export default defineConfig({
   plugins: [
     react(),
-        viteStaticCopy({
+      viteStaticCopy({
       targets: getCopyTargets(),
       hook: 'writeBundle', // Запускаємо копіювання після збірки
     }),

@@ -18,5 +18,10 @@ import fs from 'fs';
     });
   });
 
+  targets.push({
+    src: 'src/shared/*',
+    dest: 'src/slides/shared',
+  });
+
   return targets;
 }
